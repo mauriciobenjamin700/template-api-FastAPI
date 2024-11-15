@@ -1,9 +1,29 @@
 from datetime import datetime
-from sqlalchemy import Boolean, DateTime, Float, Integer, String, ForeignKey, Text
-from sqlalchemy.orm import relationship, Mapped, mapped_column
+from os.path import(
+    abspath,
+    dirname
+)
+from sqlalchemy import (
+    Boolean, 
+    DateTime, 
+    Float, 
+    ForeignKey,
+    Integer, 
+    String,
+    Text
+)
+from sqlalchemy.orm import (
+    Mapped, 
+    mapped_column,
+    relationship,
+)
+import sys
 
-from api.app.database.base import Base
-from api.app.database.connection import engine
+
+sys.path.append(abspath(dirname(__file__)))
+
+from base import Base
+from connection import engine
 
 
 class Client(Base):
@@ -33,3 +53,12 @@ class Client(Base):
     password: Mapped[str] = mapped_column(String, nullable=False)
     level: Mapped[str] = mapped_column(String, nullable=False)
     cpf_cnpj: Mapped[str] = mapped_column(String, nullable=True)
+
+
+def create_tables():
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("Tabelas criadas com sucesso!")
+
+    except Exception as e:
+        print(f"Erro ao criar tabelas: {e}")

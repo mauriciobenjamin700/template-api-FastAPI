@@ -1,1 +1,0 @@
-Coloque seus hooks nessa pasta
