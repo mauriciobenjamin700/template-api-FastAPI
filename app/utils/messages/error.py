@@ -21,6 +21,10 @@ def Conflict(detail: str) -> HTTPException:
     return HTTPException(status_code=409, detail=detail)
 
 
+def UnprocessableEntity(detail: str) -> HTTPException:
+    return HTTPException(status_code=422, detail=detail)
+
+
 def TooManyRequests(detail: str) -> HTTPException:
     return HTTPException(status_code=429, detail=detail)
 

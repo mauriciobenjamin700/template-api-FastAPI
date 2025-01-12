@@ -1,32 +1,25 @@
-from datetime import datetime
 from os.path import(
     abspath,
     dirname
 )
 from sqlalchemy import (
-    Boolean, 
-    DateTime, 
-    Float, 
-    ForeignKey,
-    Integer, 
     String,
-    Text
 )
 from sqlalchemy.orm import (
     Mapped, 
-    mapped_column,
-    relationship,
+    mapped_column
 )
 import sys
 
 
 sys.path.append(abspath(dirname(__file__)))
 
-from base import Base
-from connection import engine
+
+from configs.base import Base
+from configs.connection import engine
 
 
-class Client(Base):
+class UserModel(Base):
     """
     
     - Attributes: 
@@ -36,11 +29,10 @@ class Client(Base):
         - phone: str UNIQUE NOT NULL,
         - email: str UNIQUE NOT NULL,
         - password: str NOT NULL
-        - level: str NOT NULL # ["CLIENT", "INTERLOCUTOR", "PRODUCER"]
+        - level: str NOT NULL # ["user", "admin"]
         - cpf_cnpj: str,
         - pixkey_type: str 
         - pixkey
-    
 
     """
     __tablename__ = 'client'  
@@ -53,10 +45,13 @@ class Client(Base):
     password: Mapped[str] = mapped_column(String, nullable=False)
     level: Mapped[str] = mapped_column(String, nullable=False)
     cpf_cnpj: Mapped[str] = mapped_column(String, nullable=True)
+    pixkey_type: Mapped[str] = mapped_column(String, nullable=True)
+    pixkey: Mapped[str] = mapped_column(String, nullable=True)
 
 
 def create_tables():
     try:
+        global engine
         Base.metadata.create_all(bind=engine)
         print("Tabelas criadas com sucesso!")
 

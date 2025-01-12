@@ -1,0 +1,1 @@
+# Crie seus algoritmos de proteção/verificação de senha aqui

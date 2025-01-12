@@ -8,7 +8,11 @@ from database.models import create_tables
 from routes.client import router as client_router
 
 
-app = FastAPI()
+app = FastAPI(
+    title="Template de API com FastAPI",
+    description="Um modelo de API com FastAPI para Ajudar pessoas...",
+    version="0.0.1",
+)
 
 # Configurando o middleware de CORS
 app.add_middleware(
@@ -26,14 +30,15 @@ app.include_router(client_router)
 
 # Endpoint de teste
 
-
 @app.get('/')
 def test_api():
     return {"mensage": "API rodando!"}
 
 # Executando o servidor
 if __name__ == "__main__":
+
     create_tables()
+
     config = uvicorn.Config(
         "main:app", 
         port=5000,
