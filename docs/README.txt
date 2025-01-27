@@ -1,1 +1,1 @@
-Coloque suas contantes nessa pasta
+Coloque suas documentação da API nessa pasta

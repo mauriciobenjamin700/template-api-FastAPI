@@ -10,13 +10,6 @@ from utils.messages.error import UnprocessableEntity
 
 
 class UserRequest(BaseSchema):
-    google_id: str = Field(
-        title="Google ID",
-        description="Google ID do usuário",
-        examples=["12345678901234567890"],
-        default=None,
-        validate_default=False
-    )
     name: str = Field(
         title="Nome",
         description="Nome do usuário",

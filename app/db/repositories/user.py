@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 
-from database.models import UserModel
+from db.models import UserModel
 
 
 class UserRepository:

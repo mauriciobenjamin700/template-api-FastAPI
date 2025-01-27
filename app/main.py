@@ -4,13 +4,14 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 
-from database.models import create_tables
+from db.models import create_tables
 from routes.client import router as client_router
 
 
 app = FastAPI(
     title="Template de API com FastAPI",
-    description="Um modelo de API com FastAPI para Ajudar pessoas...",
+    summary="Um modelo de API com FastAPI",
+    description="Um modelo de API com FastAPI para ajudar pessoas a começar a desenvolver suas APIs de forma organizada",
     version="0.0.1",
 )
 

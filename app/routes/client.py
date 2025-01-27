@@ -1,12 +1,14 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from fastapi import APIRouter
 
+
+from schemas.message import Message
 
 
 router = APIRouter(prefix='/client', tags=['Client'])
 
-@router.post('/add', description="add new client")
+
+@router.get('/hello', description="Send a hello message")
 async def add_clients(
-) -> dict:
-    result = {"mensage": "Client added!"}
+) -> Message:
+    return Message(message="Hello, World!")
     

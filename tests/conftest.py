@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from database.connection import Session
+from app.db.configs.connection import Session
 
 @fixture
 def db_session():

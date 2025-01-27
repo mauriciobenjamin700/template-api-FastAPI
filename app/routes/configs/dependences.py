@@ -1,4 +1,4 @@
-from database.configs.connection import Session
+from db.configs.connection import Session
 
 def get_db_session():
     try:
