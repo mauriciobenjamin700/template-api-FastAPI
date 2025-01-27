@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 class BaseSchema(BaseModel):
 
-    def dict(self, exclude: list, **kwargs) -> dict:
+    def dict(self, exclude: list = [], **kwargs) -> dict:
         data = self.model_dump()
 
         clean = {
