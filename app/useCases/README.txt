@@ -1,1 +1,0 @@
-Coloque seus casos de uso nessa pasta

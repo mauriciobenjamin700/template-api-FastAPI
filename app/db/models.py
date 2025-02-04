@@ -48,6 +48,14 @@ class UserModel(Base):
 
 
 def create_tables():
+    """
+    Tenta gerar as tabelas do banco de dados, caso elas não existam
+
+    - Args:
+        - None
+    - Returns:
+        - None
+    """
     try:
         global engine
         Base.metadata.create_all(bind=engine)
