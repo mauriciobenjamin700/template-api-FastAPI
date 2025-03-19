@@ -1,1 +1,1 @@
-# Coloque suas regras de negócio nessa pasta
+# Coloque seus serviços nessa pasta

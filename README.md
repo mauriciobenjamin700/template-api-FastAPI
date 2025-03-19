@@ -6,31 +6,12 @@ Todo o código foi estruturado para rodar no Ubuntu-24.04, caso seu sistema oper
 
 Por padrão, o sistema operacional já vem com o python 3.12 que é o que iremos usar.
 
-### Poetry (Gerenciador de Pacotes do Python)
+### UV (Gerenciador de Pacotes do Python)
 
-Para instalar as dependencias de execução do projeto, iremos usar o `poetry`. A baixo estão os comandos para garantir a instalação e execução com sucesso
-
-```bash
-sudo apt update
-sudo apt install pipx
-pipx ensurepath
-sudo pipx ensurepath --global # optional to allow pipx actions with --global argument
-```
+Para instalar as dependências de execução do projeto, iremos usar o `uv`. A baixo estão os comandos para garantir a instalação e execução com sucesso
 
 ```bash
-pipx install poetry
-```
-
-```bash
-poetry config virtualenvs.in-project true
-```
-
-```bash
-poetry env use python3.12
-```
-
-```bash
-poetry install
+wget -qO- https://astral.sh/uv/install.sh | sh
 ```
 
 ## Docker
@@ -76,19 +57,7 @@ Instalando Docker-Compose
 sudo apt  install docker-compose
 ```
 
-Reinicie o WSL
-Pronto, seu Docker está instalado.
-
-Caso aconteça algum erro, execute:
-
-```bash
- sudo apt-get update
- sudo apt-get install docker-compose-plugin
-```
-
-```bash
-poetry add docker-compose
-```
+Reinicie e Pronto, seu Docker está instalado.
 
 ## Makefile para automações
 

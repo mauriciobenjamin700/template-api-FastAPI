@@ -1,12 +1,8 @@
-from decouple import config
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-
-from db.models import create_tables
-from routes.client import router as client_router
-
+from app.api.endpoints.user import router as user_router
 
 app = FastAPI(
     title="Template de API com FastAPI",
@@ -25,8 +21,7 @@ app.add_middleware(
 )
 
 # Incluindo os roteadores
-app.include_router(client_router)
-
+app.include_router(user_router)
 
 
 # Endpoint de teste
@@ -35,17 +30,3 @@ app.include_router(client_router)
 def test_api():
     return {"mensage": "API rodando!"}
 
-# Executando o servidor
-if __name__ == "__main__":
-
-    create_tables()
-
-    config = uvicorn.Config(
-        "main:app", 
-        port=5000,
-        host='0.0.0.0', 
-        log_level="info", 
-        reload=True
-    )
-    server = uvicorn.Server(config)
-    server.run()

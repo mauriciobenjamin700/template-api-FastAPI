@@ -1,12 +1,8 @@
-from pydantic import (
-    Field,
-    field_validator
-)
+from pydantic import Field
 
 
-from constants.user import *
-from schemas.base import BaseSchema
-from utils.messages.error import UnprocessableEntity
+from app.core.constants.messages.user import *
+from app.schemas.base import BaseSchema
 
 
 class UserRequest(BaseSchema):
@@ -66,12 +62,3 @@ class UserRequest(BaseSchema):
         default=None,
         validate_default=True
     )
-
-
-    @field_validator("name", mode="before")
-    def validate_name(self, name):
-        if not name:
-            raise UnprocessableEntity(detail=ERROR_REQUIRED_FIELD_NAME)
-        
-        return name
-        

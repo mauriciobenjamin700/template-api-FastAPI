@@ -1,1 +1,0 @@
-# Coloque funções que auxiliam na segurança

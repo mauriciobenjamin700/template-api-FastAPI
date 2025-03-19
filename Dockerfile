@@ -1,32 +1,33 @@
-# Use a imagem oficial do Python versão 3.12 como imagem base
-FROM python:3.12
+FROM python:3.12-slim
 
-# Define o diretório de trabalho para /api
 WORKDIR /api
 
-# Configuração de variáveis de ambiente
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH="/"
 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Instalação do Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 -
-    
-# Adiciona o executável do Poetry ao PATH
+COPY pyproject.toml .
+COPY uv.lock .
+
+
+RUN uv sync --frozen --no-cache
+RUN uv export --no-dev --no-hashes -o requirements.txt
+
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN rm pyproject.toml uv.lock requirements.txt
+
+
 ENV PATH="/root/.local/bin:$PATH"
 
-# Copia os arquivos poetry.lock e pyproject.toml para o diretório de trabalho
-COPY ./poetry.lock .
-COPY ./pyproject.toml .
+COPY main.py .
 
-# Configuração do Poetry e instalação das dependências
-RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
+COPY app ./app
 
-# Copia o conteúdo do diretório ./app para o diretório /api na imagem
-COPY ./app /api/app
+EXPOSE 8000
 
-# Define o comando padrão para rodar a aplicação
-CMD ["python", "./app/main.py"]
+CMD ["python", "main.py"]
 
-# Exponha a porta 5000
-EXPOSE 5000
+#CMD ["sleep", "infinity"]

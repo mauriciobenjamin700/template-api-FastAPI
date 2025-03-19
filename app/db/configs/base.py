@@ -1,9 +1,9 @@
-from typing import Any, Dict
-from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.inspection import inspect
+from sqlalchemy.ext.asyncio import AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase
 
 
-class Base(DeclarativeBase):
+class Base(AsyncAttrs, DeclarativeBase):
     """
     Classe que permite conectar objetos a tabelas no banco de dados, além de mapealas para que a classe vire uma tabela no banco de dados
     
@@ -16,7 +16,7 @@ class Base(DeclarativeBase):
         columns_str = ", ".join(f"{key}={value!r}" for key, value in columns.items())
         return f"{cls.__name__}({columns_str})"
     
-    def dict(self, *args, **kwargs) -> Dict[str, Any]:
+    def to_dict(self, **kwargs) -> dict:
         """
         Converte o objeto para um dicionário, removendo chaves com valores None.
         
@@ -30,4 +30,5 @@ class Base(DeclarativeBase):
         column_attrs = inspect(self.__class__).mapper.column_attrs
         columns = {attr.key: getattr(self, attr.key) for attr in column_attrs}
         columns = {k: v for k, v in columns.items() if v is not None}
+        columns.update(kwargs)
         return columns
