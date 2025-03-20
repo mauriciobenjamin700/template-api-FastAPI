@@ -1,0 +1,8 @@
+FROM postgres:17.4-alpine3.21
+
+ENV POSTGRES_DB=database_name
+ENV POSTGRES_USER=user_name
+ENV POSTGRES_PASSWORD=user_password
+ENV DB_PORT=5432
+
+EXPOSE 5432

@@ -1,5 +1,5 @@
 from logging.config import fileConfig
-from app.db.base import Base
+from app.db.configs.base import Base
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
@@ -9,7 +9,7 @@ from decouple import config as config_decouple
 
 config = context.config
 
-DB_URL = config_decouple("DB_URL_ALEMBIC")
+DB_URL = config_decouple("DB_URL")
 
 config.set_main_option('sqlalchemy.url', DB_URL)
 
