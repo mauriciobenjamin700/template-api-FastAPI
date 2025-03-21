@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import (
 
 from app.core.settings import config
 from app.db.configs.base import Base
+from app.db.models import *
 
 
 class AsyncDatabaseManager:
