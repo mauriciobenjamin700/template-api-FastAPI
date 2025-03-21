@@ -1,7 +1,6 @@
 # Variáveis
-DOCKER_COMPOSE_FILE=../docker-compose.yaml
-
-# Funções para o Banco de Dados 
+#DOCKER_COMPOSE_FILE=../docker-compose.yaml
+DOCKER_COMPOSE_FILE=docker-compose.yaml
 
 create-migrations:
 	@PYTHONPATH=$PYTHONPATH:$(pwd) alembic revision --autogenerate -m $(msg)
@@ -12,19 +11,14 @@ run-migrations:
 rollback-migrations:
 	@PYTHONPATH=$PYTHONPATH:$(pwd) alembic downgrade $(id)
 
-# Funções para Iniciar, Parar e Reiniciar o Servidor
 start:
 	@docker compose -f $(DOCKER_COMPOSE_FILE) up --build -d
 
 stop:
 	@docker compose -f $(DOCKER_COMPOSE_FILE) down
 
-restart: stop start
-
-# A diferança entre o '@' e sem o '@' é que com o '@' o comando é executado direto e sem o '@' o comando é jogado no terminal e depois executado
-
 tests:
-	@docker exec -it "Nome da Sua API" pytest -p no:warnings /api/app/tests
+	@docker exec -it api pytest -p no:warnings /api/app/tests
 
 
 kabum:
