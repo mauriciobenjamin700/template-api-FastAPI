@@ -1,0 +1,36 @@
+ERROR_REQUIRED_FIELD_NAME = "Nome é obrigatório"
+ERROR_REQUIRED_FIELD_EMAIL = "Email é obrigatório"
+ERROR_REQUIRED_FIELD_PHONE = "Número de telefone é obrigatório"
+ERROR_REQUIRED_FIELD_PASSWORD = "Senha é obrigatória"
+ERROR_REQUIRED_FIELD_LEVEL = "Nível é obrigatório"
+ERROR_REQUIRED_FIELD_CPF_CNPJ = "CPF ou CNPJ é obrigatório"
+ERROR_REQUIRED_FIELD_PIX_KEY_TYPE = "Tipo de Pix Key é obrigatório"
+ERROR_REQUIRED_FIELD_PIX_KEY = "Pix Key é obrigatório"
+
+
+ERROR_INVALID_EMAIL = "Email inválido"
+ERROR_INVALID_PHONE = "Número de telefone inválido"
+ERROR_INVALID_CPF_CNPJ = "CPF ou CNPJ inválido"
+ERROR_INVALID_PIX_KEY_TYPE = "Tipo de Pix Key inválido"
+ERROR_INVALID_PIX_KEY = "Pix Key inválido"
+ERROR_INVALID_LEVEL = "Nível inválido"
+
+ERROR_EMAIL_INVALID_FORMAT_TYPE = "Email must be a string"
+ERROR_EMAIL_INVALID_FORMAT_MASK = "Email must have a valid format"
+
+ERROR_PASSWORD_INVALID_FORMAT_TYPE = "Password must be a string"
+ERROR_PASSWORD_INVALID_FORMAT_MIN_LENGTH = "Password must have at least 8 characters"
+ERROR_PASSWORD_INVALID_FORMAT_MAX_LENGTH = "Password must have at most 255 characters"
+ERROR_PASSWORD_INVALID_FORMAT_DIGIT = "Password must have at least one digit"
+ERROR_PASSWORD_INVALID_FORMAT_LOWERCASE = "Password must have at least one lowercase letter"
+ERROR_PASSWORD_INVALID_FORMAT_UPPERCASE = "Password must have at least one uppercase letter"
+ERROR_PASSWORD_INVALID_FORMAT_SPECIAL_CHARACTER = "Password must have at least one special character"
+
+
+ERROR_IS_ADMIN_INVALID_FORMAT_TYPE = "Is Admin must be a boolean"
+ERROR_NAME_INVALID_FORMAT_TYPE = "Name must be a string"
+ERROR_NAME_INVALID_FORMAT_MIN_LENGTH = "Name must be at least 2 characters"
+ERROR_PHONE_INVALID_FORMAT_TYPE = "Phone must be a string"
+ERROR_PHONE_INVALID_FORMAT_LENGTH = "Phone must be at least 11 characters"
+ERROR_USERNAME_INVALID_FORMAT_TYPE = "Username must be a string"
+ERROR_USERNAME_INVALID_FORMAT_MIN_LENGTH = "Username must be at least 2 characters with no spaces"
