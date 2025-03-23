@@ -8,6 +8,7 @@ volumes:
 services:
   db:
     image: postgres:17.4-alpine3.21
+    container_name: db
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}

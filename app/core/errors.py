@@ -1,3 +1,24 @@
+class ConflictError(Exception):
+    """
+    A class that represents a conflict error.
+
+    - Attributes:
+        - status_code: The status code of the error.
+        - detail: The error message.
+    """
+
+    def __init__(self, detail: str):
+        """
+        The constructor for the ConflictError class.
+
+        - Args:
+            - detail: The error message.
+        """
+        self.status_code = 409
+        self.detail = detail
+        super().__init__(detail)
+
+
 class ValidationError(Exception):
     """
     A class that represents a validation error.

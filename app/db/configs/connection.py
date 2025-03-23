@@ -22,7 +22,8 @@ class AsyncDatabaseManager:
         - create_tables: Create the tables in the database.
         - drop_tables: Drop the tables in the database.
     """
-    def __init__(self):
+    def __init__(self, db_url: str = config.DB_URL) -> None:
+        self.db_url = db_url
         self.__engine = None
         self.__session_maker = None
         self.__session = None
@@ -31,7 +32,7 @@ class AsyncDatabaseManager:
     def connect(self):
         if self.__engine is None and self.__session_maker is None:
             self.__engine = create_async_engine(
-                config.DB_URL,
+                self.db_url,
                 # future=True,
                 echo=True
             )
@@ -77,5 +78,7 @@ class AsyncDatabaseManager:
         pass
             
 
-db=AsyncDatabaseManager()
+db=AsyncDatabaseManager(config.DB_URL)
 db.connect()
+test_db = AsyncDatabaseManager(config.TEST_DB_URL)
+test_db.connect()

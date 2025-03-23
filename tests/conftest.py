@@ -1,18 +1,37 @@
 from pytest import fixture
-import sys
 
-
-sys.path.append('app')
-
-
-from app.db.configs.connection import Session
+from app.core.constants.enums.user import UserRoles
+from app.core.security.password import hash_password
+from app.db.configs.connection import test_db
 
 
 @fixture
-def db_session():
-    try:
-        session = Session()
+async def mock_db_session():
+    await test_db.create_tables()
+    async with test_db as session:
+        
         yield session
+        
+    await test_db.drop_tables()
+    
+        
 
-    finally:
-        session.close()
+@fixture
+def mock_user_request():
+    return {
+        "name": "John Doe",
+        "phone": "(89) 91111-2222",
+        "email": "jhon.doe@gmail.com",
+        "password" : "SafePassword123@"
+    }
+    
+    
+@fixture
+def mock_user_model():
+    return {
+        "name": "John Doe",
+        "phone": "(89) 91111-2222",
+        "email": "jhon.doe@gmail.com",
+        "password" : hash_password("SafePassword123@"),
+        "role": UserRoles.USER.value
+    }

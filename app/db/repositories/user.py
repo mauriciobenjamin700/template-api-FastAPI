@@ -1,32 +1,103 @@
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
-
-from db.models import UserModel
+from app.core.constants.messages import ERROR_DATABASE_USER_ALREADY_EXISTS
+from app.core.errors import ConflictError
+from app.db.models import UserModel
 
 
 class UserRepository:
-    def __init__(self, db_session: Session):
+    """
+    User Repository Class to handle all database operations related to User
+    
+    - Attributes:
+        - db_session: AsyncSession
+        
+    - Methods:
+        - add: Add a new User to the database
+        - get: Get a User from the database
+        - update: Update a User in the database
+        - delete: Delete a User from the database
+    """
+    def __init__(self, db_session: AsyncSession) -> None:
         self.db_session = db_session
 
 
-    def add(self, model: UserModel) -> None:
-        self.db_session.add(model)
-        self.db_session.commit()
+    async def add(self, model: UserModel) -> UserModel: 
+        """
+        Add a new User to the database
+        
+        - Args:
+            - model: UserModel
+            
+        - Returns:
+            - UserModel
+        """
+        
+        try:
+            self.db_session.add(model)
+            await self.db_session.commit()
+            await self.db_session.refresh(model)
+            return model
+        
+        except Exception as e:
+            print("USER REPOSITORY ADD ERROR: ",e)
+            await self.db_session.rollback()
+            raise ConflictError(ERROR_DATABASE_USER_ALREADY_EXISTS)
 
 
-    def get(self, id: str) -> UserModel:
-        return self.db_session.scalar(
-            select(UserModel).where(id=id)
-        )
+    async def get(self, id: str = None, email: str = None, all_results = False) -> None | UserModel | list[UserModel]:
+        """
+        Get a User from the database by id or email. If all_results is True, return all results found in the database.
+        
+        - Args:
+            - id: str = None
+            - email: str = None
+            - all_results: bool = False
+            
+        - Returns:
+            - UserModel
+            - List[UserModel]
+        """
+        if id:
+            stmt = select(UserModel).where(UserModel.id == id)
+        elif email:
+            stmt = select(UserModel).where(UserModel.email == email)
+        else:
+            stmt = select(UserModel)
+            
+        result = await self.db_session.execute(stmt)
+        
+        if all_results:
+            return result.scalars().all()
+        
+        return result.scalars().first()
     
 
-    def update(self, model: UserModel) -> UserModel:
-        self.db_session.commit()
-        self.db_session.refresh(model)
+    async def update(self, model: UserModel) -> UserModel:
+        """
+        Update a User in the database
+        
+        - Args:
+            - model: UserModel
+        
+        - Returns:
+            - UserModel
+        """
+        await self.db_session.commit()
+        await self.db_session.refresh(model)
         return model
     
 
-    def delete(self, model: UserModel) -> None:
-        self.db_session.delete(model)
-        self.db_session.commit()
+    async def delete(self, model: UserModel) -> None:
+        """
+        Delete a User from the database
+        
+        - Args:
+            - model: UserModel
+            
+        - Returns:
+            - None
+        """
+        await self.db_session.delete(model)
+        await self.db_session.commit()

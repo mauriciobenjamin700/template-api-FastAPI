@@ -2,18 +2,7 @@ from pydantic import field_validator
 from re import match
 
 from app.core.errors import ValidationError
-from app.core.constants.messages import (
-    ERROR_EMAIL_INVALID_FORMAT_TYPE,
-    ERROR_EMAIL_INVALID_FORMAT_MASK,
-    ERROR_NAME_INVALID_FORMAT_MIN_LENGTH,
-    ERROR_PASSWORD_INVALID_FORMAT_DIGIT,
-    ERROR_PASSWORD_INVALID_FORMAT_LOWERCASE,
-    ERROR_PASSWORD_INVALID_FORMAT_MAX_LENGTH,
-    ERROR_PASSWORD_INVALID_FORMAT_MIN_LENGTH,
-    ERROR_PASSWORD_INVALID_FORMAT_SPECIAL_CHARACTER,
-    ERROR_PASSWORD_INVALID_FORMAT_UPPERCASE,
-    ERROR_PHONE_INVALID_FORMAT_LENGTH,
-)
+from app.core.constants.messages import *
 
 
 @field_validator("email", mode="before")
@@ -28,7 +17,7 @@ def validate_email(cls, value: str) -> str:
         - str: The email value.
     """
     if not isinstance(value, str):
-        raise ValidationError(field="email", detail=ERROR_EMAIL_INVALID_FORMAT_TYPE)
+        raise ValidationError(field="email", detail=ERROR_INVALID_FORMAT_TYPE_EMAIL)
     
     value = value.strip()
     
@@ -49,7 +38,7 @@ def validate_name(cls, value: str) -> str:
         - str: The name value.
     """
     if not isinstance(value, str):
-        raise ValidationError(field="name", detail=ERROR_NAME_INVALID_FORMAT_TYPE)
+        raise ValidationError(field="name", detail=ERROR_INVALID_FORMAT_TYPE_NAME)
     
     value = value.strip()
     
