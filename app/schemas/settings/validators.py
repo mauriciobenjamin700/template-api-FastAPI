@@ -1,8 +1,25 @@
+from datetime import datetime
 from pydantic import field_validator
 from re import match
 
 from app.core.errors import ValidationError
 from app.core.constants.messages import *
+
+
+@field_validator("created_at", mode="before")
+def validate_created_at(cls, value: datetime | str) -> str:
+    
+    if not isinstance(value, (datetime, str)):
+        raise ValidationError(field="created_at", detail=ERROR_INVALID_FORMAT_TYPE_DATE)
+
+    if isinstance(value, datetime):
+        value = value.strftime("%Y-%m-%d %H:%M:%S")
+        
+    elif not match(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", value):
+        raise ValidationError(field="created_at", detail=ERROR_DATE_INVALID_FORMAT_MASK)
+        
+    
+    return value
 
 
 @field_validator("email", mode="before")
@@ -25,6 +42,29 @@ def validate_email(cls, value: str) -> str:
         raise ValidationError(field="email", detail=ERROR_EMAIL_INVALID_FORMAT_MASK)
     
     return value
+
+
+@field_validator("id", mode="before")
+def validate_id(cls, value: str) -> str:
+    """
+    A function that validates the id field.
+
+    - Args:
+        - cls: The class instance.
+        - value: The id value.
+    - Returns:
+        - str: The id value.
+    """
+    if not isinstance(value, str):
+        raise ValidationError(field="id", detail=ERROR_INVALID_FORMAT_TYPE_ID)
+    
+    value = value.strip()
+    
+    if len(value)  == 0:
+        raise ValidationError(field="id", detail=ERROR_REQUIRED_FIELD_ID)
+    
+    return value
+
 
 @field_validator("name", mode="before")
 def validate_name(cls, value: str) -> str:
@@ -105,5 +145,21 @@ def validate_phone(cls, value: str) -> str:
     
     if len(value) < 11:
         raise ValidationError(field="phone", detail=ERROR_PHONE_INVALID_FORMAT_LENGTH)
+    
+    return value
+
+
+@field_validator("updated_at", mode="before")
+def validate_updated_at(cls, value: datetime | str) -> str:
+    
+    if not isinstance(value, (datetime, str)):
+        raise ValidationError(field="created_at", detail=ERROR_INVALID_FORMAT_TYPE_DATE)
+
+    if isinstance(value, datetime):
+        value = value.strftime("%Y-%m-%d %H:%M:%S")
+        
+    elif not match(r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", value):
+        raise ValidationError(field="created_at", detail=ERROR_DATE_INVALID_FORMAT_MASK)
+        
     
     return value

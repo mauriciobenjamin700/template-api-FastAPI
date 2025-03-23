@@ -5,9 +5,10 @@ from sqlalchemy.orm import DeclarativeBase
 
 class Base(AsyncAttrs, DeclarativeBase):
     """
-    Classe que permite conectar objetos a tabelas no banco de dados, além de mapealas para que a classe vire uma tabela no banco de dados
+    Base class to be inherited by all models. This class provides a method to convert the model to a dictionary.
     
-    Caso seja printada, a classe irá exibir todos os seus atributos e valores (caso tenha)
+    - Methods:
+        - to_dict: Method to convert the model to a dictionary.
     """
     def __repr__(self) -> str:
         cls = self.__class__
@@ -16,19 +17,28 @@ class Base(AsyncAttrs, DeclarativeBase):
         columns_str = ", ".join(f"{key}={value!r}" for key, value in columns.items())
         return f"{cls.__name__}({columns_str})"
     
-    def to_dict(self, **kwargs) -> dict:
+    def to_dict(self, exclude: list = [], include: dict = {}, remove_none: str = False) -> dict:
         """
-        Converte o objeto para um dicionário, removendo chaves com valores None.
+        Method to convert the model to a dictionary.
         
-        Args:
-            *args: Argumentos adicionais para a conversão.
-            **kwargs: Argumentos adicionais para a conversão.
-            
-        Returns:
-            Dict[str, Any]: O objeto convertido em dicionário.
+        - Args:
+            - exclude: list : A list of fields to exclude from the dictionary.
+            - include: dict : A dictionary of fields to include in the dictionary.
+            - remove_none: bool : A flag to remove None values from the dictionary.            
+        - Returns:
+            - dict : A dictionary representation of the model.
         """
         column_attrs = inspect(self.__class__).mapper.column_attrs
-        columns = {attr.key: getattr(self, attr.key) for attr in column_attrs}
-        columns = {k: v for k, v in columns.items() if v is not None}
-        columns.update(kwargs)
-        return columns
+        data = {attr.key: getattr(self, attr.key) for attr in column_attrs}
+        data = {k: v for k, v in data.items()}
+        
+        for key, value in data.items():
+            if key in exclude:
+                del data[key]
+            if remove_none and value is None:
+                del data[key]
+                
+        data.update(include)
+
+        return data
+    

@@ -37,8 +37,6 @@ class UserModel(Base):
         - updated_at: datetime NOT NULL DEFAULT now() ON UPDATE now()
         
         __tablename__: str = 'users'
-        
-
     """
     __tablename__ = 'users'  
     

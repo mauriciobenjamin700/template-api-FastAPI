@@ -1,8 +1,11 @@
+ERROR_INVALID_FORMAT_TYPE_DATE = "Datas devem ser strings ou datetimes"
+ERROR_INVALID_FORMAT_TYPE_ID = "ID deve ser uma string"
 ERROR_INVALID_FORMAT_TYPE_NAME = "Nome deve ser uma string"
 ERROR_INVALID_FORMAT_TYPE_EMAIL = "Email deve ser uma string"
 ERROR_INVALID_FORMAT_TYPE_PHONE = "Telefone deve ser uma string"
 ERROR_INVALID_FORMAT_TYPE_PASSWORD = "Senha deve ser uma string"
 
+ERROR_REQUIRED_FIELD_ID = "ID é obrigatório"
 ERROR_REQUIRED_FIELD_NAME = "Nome é obrigatório"
 ERROR_REQUIRED_FIELD_EMAIL = "Email é obrigatório"
 ERROR_REQUIRED_FIELD_PHONE = "Número de telefone é obrigatório"
@@ -19,6 +22,8 @@ ERROR_INVALID_CPF_CNPJ = "CPF ou CNPJ inválido"
 ERROR_INVALID_PIX_KEY_TYPE = "Tipo de Pix Key inválido"
 ERROR_INVALID_PIX_KEY = "Pix Key inválido"
 ERROR_INVALID_LEVEL = "Nível inválido"
+
+ERROR_DATE_INVALID_FORMAT_MASK = "Data deve ter o formato YYYY-MM-DD HH:MM:SS"
 
 ERROR_EMAIL_INVALID_FORMAT_TYPE = "Email deve ser uma string"
 ERROR_EMAIL_INVALID_FORMAT_MASK = "Email deve ter um formato válido"

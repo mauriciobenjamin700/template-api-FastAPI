@@ -17,6 +17,27 @@ class ConflictError(Exception):
         self.status_code = 409
         self.detail = detail
         super().__init__(detail)
+        
+
+class NotFoundError(Exception):
+    """
+    A class that represents a not found error.
+
+    - Attributes:
+        - status_code: The status code of the error.
+        - detail: The error message.
+    """
+
+    def __init__(self, detail: str):
+        """
+        The constructor for the NotFoundError class.
+
+        - Args:
+            - detail: The error message.
+        """
+        self.status_code = 404
+        self.detail = detail
+        super().__init__(detail)
 
 
 class ValidationError(Exception):
