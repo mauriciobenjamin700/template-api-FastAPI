@@ -102,10 +102,11 @@ class UserRepository:
 
     async def delete(self, model: UserModel = None, id: str = None) -> None:
         """
-        Delete a User from the database
+        Delete a User from the database. If model is provided, delete the model. If id is provided, delete the model with the id.
 
         - Args:
-            - model: UserModel
+            - model: UserModel : User model to delete
+            - id: str : Id of the User model to delete
 
         - Returns:
             - None
@@ -114,15 +115,12 @@ class UserRepository:
             await self.db_session.delete(model)
             await self.db_session.commit()
         elif id:
-            stmt = delete(UserModel).where(UserModel.id == model.id)
+            stmt = delete(UserModel).where(UserModel.id == id)
             result = await self.db_session.execute(stmt)
-            model = result.scalars().first()
             await self.db_session.commit()
 
             if result.rowcount == 0:
                 raise NotFoundError(ERROR_DATABASE_USER_NOT_FOUND)
 
         else:
-            raise ValidationError(ERROR_REQUIRED_FIELD_ID)
-
-        return model
+            raise ValidationError("id",ERROR_REQUIRED_FIELD_ID)
