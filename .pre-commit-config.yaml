@@ -12,3 +12,12 @@ repos:
     rev: v0.11.2  # Use a versão mais recente
     hooks:
       - id: ruff
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        entry: pytest
+        language: system
+        pass_filenames: false
+        always_run: true

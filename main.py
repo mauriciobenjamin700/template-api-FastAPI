@@ -1,7 +1,7 @@
 import asyncio
 import uvicorn
 from app.db.configs.connection import db
-from app.server import app
+from app.main import app
 
 async def create_tables():
     max_retries = 5
@@ -25,10 +25,22 @@ async def main():
         app,
         host="0.0.0.0",
         port=8000,
-        log_level="info"
+        log_level="info",
+        log_config="logging_config.yaml"  # Apontar para o arquivo de configuração de log
     )
+
     server = uvicorn.Server(config)
     await server.serve()
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+    """
+    log_level pode ter os seguintes valores:
+        "critical": Registra apenas mensagens críticas.
+        "error": Registra mensagens de erro e mensagens mais graves.
+        "warning": Registra mensagens de aviso, erro e mensagens mais graves.
+        "info": Registra mensagens informativas, de aviso, erro e mensagens mais graves.
+        "debug": Registra mensagens de depuração, informativas, de aviso, erro e mensagens mais graves.
+        "trace": Registra todas as mensagens, incluindo mensagens de rastreamento detalhadas.
+    """

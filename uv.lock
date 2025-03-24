@@ -518,6 +518,7 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "python-decouple" },
+    { name = "pyyaml" },
     { name = "sqlalchemy" },
     { name = "uvicorn" },
 ]
@@ -539,6 +540,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.10.6" },
     { name = "pydantic-settings", specifier = ">=2.8.1" },
     { name = "python-decouple", specifier = ">=3.8" },
+    { name = "pyyaml", specifier = ">=6.0.2" },
     { name = "sqlalchemy", specifier = ">=2.0.39" },
     { name = "uvicorn", specifier = ">=0.34.0" },
 ]

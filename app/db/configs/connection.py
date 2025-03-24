@@ -34,7 +34,8 @@ class AsyncDatabaseManager:
             self.__engine = create_async_engine(
                 self.db_url,
                 # future=True,
-                echo=True
+                #echo=True,
+                echo=False
             )
             self.__session_maker = async_sessionmaker(
                 self.__engine,

@@ -29,7 +29,7 @@ async def add_user(
 @router.get('/')
 async def get_users(
     session: AsyncSession = Depends(get_session),
-) -> UserResponse:
+) -> list[UserResponse]:
 
     service = UserService(session)
     users = await service.get_all()
@@ -46,12 +46,24 @@ async def get_user(
     return user
 
 
+@router.put('/{user_id}')
+async def update_user(
+    user_id: str,
+    request: UserRequest,
+    session: AsyncSession = Depends(get_session),
+) -> UserResponse:
+
+    service = UserService(session)
+    user = await service.update(user_id, request)
+    return user
+
+
 @router.delete('/{user_id}')
 async def delete_user(
     user_id: str,
     session: AsyncSession = Depends(get_session),
 ) -> UserResponse:
-
+    print("user_id: ", user_id)
     service = UserService(session)
     user = await service.delete_by_id(user_id)
     return user

@@ -38,3 +38,5 @@ services:
         condition: service_healthy
     networks:
       - fastapi_network
+    volumes:
+      - ./app/logs:/api/app/logs

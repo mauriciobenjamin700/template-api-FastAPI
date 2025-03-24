@@ -6,3 +6,4 @@
 venv
 
 *.ruff_cache
+*.log
