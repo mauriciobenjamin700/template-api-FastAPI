@@ -6,7 +6,7 @@ from sqlalchemy import (
     TIMESTAMP
 )
 from sqlalchemy.orm import (
-    Mapped, 
+    Mapped,
     mapped_column
 )
 
@@ -17,16 +17,16 @@ from app.db.configs.base import Base
 
 class UserModel(Base):
     """
-    A class to represent a user model in the database. A user model is a representation of a user in the database. 
-    
+    A class to represent a user model in the database. A user model is a representation of a user in the database.
+
     - Args:
         - name: str
         - phone: str
         - email: str
         - password: str
         - role: str
-    
-    - Attributes: 
+
+    - Attributes:
         - id: str PK,
         - name: str NOT NULL,
         - phone: str UNIQUE NOT NULL,
@@ -35,11 +35,11 @@ class UserModel(Base):
         - role: str NOT NULL # ["user", "admin"]
         - created_at: datetime NOT NULL DEFAULT now()
         - updated_at: datetime NOT NULL DEFAULT now() ON UPDATE now()
-        
+
         __tablename__: str = 'users'
     """
-    __tablename__ = 'users'  
-    
+    __tablename__ = 'users'
+
     id: Mapped[str] = mapped_column(String, primary_key=True, default=id_generator)
     name: Mapped[str] = mapped_column(String, nullable=False)
     phone: Mapped[str] = mapped_column(String, nullable=False, unique=True)

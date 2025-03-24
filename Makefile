@@ -2,6 +2,16 @@
 #DOCKER_COMPOSE_FILE=../docker-compose.yaml
 DOCKER_COMPOSE_FILE=docker-compose.yaml
 
+lint:
+	ruff check .
+
+fix:
+	ruff check --fix .
+
+pre-commit:
+	pre-commit autoupdate
+	pre-commit run --all-files
+
 create-migrations:
 	@PYTHONPATH=$PYTHONPATH:$(pwd) alembic revision --autogenerate -m $(msg)
 
@@ -11,7 +21,7 @@ run-migrations:
 rollback-migrations:
 	@PYTHONPATH=$PYTHONPATH:$(pwd) alembic downgrade $(id)
 
-start:
+start: fix
 	@docker compose -f $(DOCKER_COMPOSE_FILE) up --build -d
 
 stop:

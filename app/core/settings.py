@@ -7,7 +7,7 @@ class Settings(BaseSettings):
         title="URL do banco de dados",
         description="URL do banco de dados",
         default="postgresql://user:password@localhost:5432/database"
-    ) 
+    )
     DB_USER: str = Field(
         title="Usuário do banco de dados",
         description="Usuário do banco de dados",
@@ -28,9 +28,9 @@ class Settings(BaseSettings):
         description="URL do banco de dados de teste",
         default="sqlite+aiosqlite:///:memory:"
     )
-    
-    
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)  
+
+
+    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 
 
 config = Settings()

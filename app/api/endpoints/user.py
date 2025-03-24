@@ -1,13 +1,57 @@
-from fastapi import APIRouter
+from fastapi import (
+    APIRouter,
+    Depends
+)
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.api.dependencies.db import get_session
+from app.schemas.user import(
+    UserRequest,
+    UserResponse
+)
+from app.services.user import UserService
 
 
 router = APIRouter(prefix='/user', tags=['User'])
 
 
-@router.get('/hello', description="Send a hello message")
-async def add_clients() -> dict:
-    return {"message": "Hello, World!"}
-    
-@router.get('/hellos', description="Send a hello message")
-async def add_clients() -> list[dict]:
-    return [{"message": "Hello, World!"}]
+@router.post('/')
+async def add_user(
+    request: UserRequest,
+    session: AsyncSession = Depends(get_session),
+) -> UserResponse:
+
+    service = UserService(session)
+    user = await service.add(request)
+    return user
+
+
+@router.get('/')
+async def get_users(
+    session: AsyncSession = Depends(get_session),
+) -> UserResponse:
+
+    service = UserService(session)
+    users = await service.get_all()
+    return users
+
+@router.get('/{user_id}')
+async def get_user(
+    user_id: str,
+    session: AsyncSession = Depends(get_session),
+) -> UserResponse:
+
+    service = UserService(session)
+    user = await service.get_by_id(user_id)
+    return user
+
+
+@router.delete('/{user_id}')
+async def delete_user(
+    user_id: str,
+    session: AsyncSession = Depends(get_session),
+) -> UserResponse:
+
+    service = UserService(session)
+    user = await service.delete_by_id(user_id)
+    return user

@@ -11,7 +11,7 @@ ENV PYTHONPATH="/"
 
 # Instalação do Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
-    
+
 # Adiciona o executável do Poetry ao PATH
 ENV PATH="/root/.local/bin:$PATH"
 

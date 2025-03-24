@@ -17,7 +17,7 @@ class ConflictError(Exception):
         self.status_code = 409
         self.detail = detail
         super().__init__(detail)
-        
+
 
 class NotFoundError(Exception):
     """

@@ -1,6 +1,3 @@
-from pydantic import Field
-
-
 from app.schemas.settings.base import BaseSchema
 from app.schemas.settings.fields import(
     created_at_field,
@@ -25,19 +22,19 @@ from app.schemas.settings.validators import (
 class UserRequest(BaseSchema):
     """
     Class to validate the request body of the user register endpoint.
-    
+
     - Args:
         - name: str,
         - phone: str,
         - email: str,
         - password: str
-        
+
     - Attributes:
         - name: str,
         - phone: str,
         - email: str,
         - password: str
-        
+
     - Raises:
         - ValidationError: If any field is invalid.
     """
@@ -45,17 +42,17 @@ class UserRequest(BaseSchema):
     phone: str = phone_field()
     email: str = email_field()
     password: str = password_field()
-    
+
     __name_validator = validate_name
     __phone_validator = validate_phone
     __email_validator = validate_email
     __password_validator = validate_password
-    
-    
+
+
 class UserResponse(BaseSchema):
     """
     Class to contain data about the user.
-    
+
     - Args:
         - id: str,
         - name: str,
@@ -63,7 +60,7 @@ class UserResponse(BaseSchema):
         - email: str,
         - created_at: str,
         - updated_at: str
-        
+
     - Attributes:
         - id: str,
         - name: str,
@@ -71,7 +68,7 @@ class UserResponse(BaseSchema):
         - email: str,
         - created_at: str,
         - updated_at: str
-    
+
     - Raises:
         - ValidationError: If any field is invalid
     """
@@ -81,7 +78,7 @@ class UserResponse(BaseSchema):
     email: str = email_field()
     created_at: str = created_at_field()
     updated_at: str =  updated_at_field()
-    
+
     __id_validator = validate_id
     __name_validator = validate_name
     __phone_validator = validate_phone

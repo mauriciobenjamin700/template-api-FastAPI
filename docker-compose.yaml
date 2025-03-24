@@ -21,6 +21,11 @@ services:
       - fastapi_network
     volumes:
       - fastapi_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U  ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   api:
     build: .
     container_name: api
@@ -29,6 +34,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - fastapi_network

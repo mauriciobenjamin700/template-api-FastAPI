@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 
 from app.api.endpoints.user import router as user_router
 
@@ -29,4 +28,3 @@ app.include_router(user_router)
 @app.get('/')
 def test_api():
     return {"mensage": "API rodando!"}
-

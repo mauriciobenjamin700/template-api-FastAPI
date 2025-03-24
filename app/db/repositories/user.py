@@ -1,18 +1,29 @@
-from sqlalchemy import select
+from sqlalchemy import (
+    delete,
+    select
+)
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.constants.messages import ERROR_DATABASE_USER_ALREADY_EXISTS
-from app.core.errors import ConflictError
+from app.core.constants.messages import (
+    ERROR_DATABASE_USER_ALREADY_EXISTS,
+    ERROR_DATABASE_USER_NOT_FOUND,
+    ERROR_REQUIRED_FIELD_ID
+)
+from app.core.errors import (
+    ConflictError,
+    NotFoundError,
+    ValidationError
+)
 from app.db.models import UserModel
 
 
 class UserRepository:
     """
     User Repository Class to handle all database operations related to User
-    
+
     - Attributes:
         - db_session: AsyncSession
-        
+
     - Methods:
         - add: Add a new User to the database
         - get: Get a User from the database
@@ -23,23 +34,23 @@ class UserRepository:
         self.db_session = db_session
 
 
-    async def add(self, model: UserModel) -> UserModel: 
+    async def add(self, model: UserModel) -> UserModel:
         """
         Add a new User to the database
-        
+
         - Args:
             - model: UserModel
-            
+
         - Returns:
             - UserModel
         """
-        
+
         try:
             self.db_session.add(model)
             await self.db_session.commit()
             await self.db_session.refresh(model)
             return model
-        
+
         except Exception as e:
             print("USER REPOSITORY ADD ERROR: ",e)
             await self.db_session.rollback()
@@ -49,12 +60,12 @@ class UserRepository:
     async def get(self, id: str = None, email: str = None, all_results = False) -> None | UserModel | list[UserModel]:
         """
         Get a User from the database by id or email. If all_results is True, return all results found in the database.
-        
+
         - Args:
             - id: str = None
             - email: str = None
             - all_results: bool = False
-            
+
         - Returns:
             - UserModel
             - List[UserModel]
@@ -65,39 +76,53 @@ class UserRepository:
             stmt = select(UserModel).where(UserModel.email == email)
         else:
             stmt = select(UserModel)
-            
+
         result = await self.db_session.execute(stmt)
-        
+
         if all_results:
             return result.scalars().all()
-        
+
         return result.scalars().first()
-    
+
 
     async def update(self, model: UserModel) -> UserModel:
         """
         Update a User in the database
-        
+
         - Args:
             - model: UserModel
-        
+
         - Returns:
             - UserModel
         """
         await self.db_session.commit()
         await self.db_session.refresh(model)
         return model
-    
 
-    async def delete(self, model: UserModel) -> None:
+
+    async def delete(self, model: UserModel = None, id: str = None) -> None:
         """
         Delete a User from the database
-        
+
         - Args:
             - model: UserModel
-            
+
         - Returns:
             - None
         """
-        await self.db_session.delete(model)
-        await self.db_session.commit()
+        if model:
+            await self.db_session.delete(model)
+            await self.db_session.commit()
+        elif id:
+            stmt = delete(UserModel).where(UserModel.id == model.id)
+            result = await self.db_session.execute(stmt)
+            model = result.scalars().first()
+            await self.db_session.commit()
+
+            if result.rowcount == 0:
+                raise NotFoundError(ERROR_DATABASE_USER_NOT_FOUND)
+
+        else:
+            raise ValidationError(ERROR_REQUIRED_FIELD_ID)
+
+        return model

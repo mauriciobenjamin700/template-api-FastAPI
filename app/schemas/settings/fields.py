@@ -2,7 +2,7 @@ from pydantic import Field
 
 
 def created_at_field(title: str = "Data de criação", description: str = "Data de criação", example: str = "2021-01-01 00:00:00") -> Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -13,7 +13,7 @@ def created_at_field(title: str = "Data de criação", description: str = "Data 
 
 
 def email_field(title: str = "E-mail", description: str = "E-mail", example: str = "email@gmail.com") -> Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -21,9 +21,9 @@ def email_field(title: str = "E-mail", description: str = "E-mail", example: str
         default=None,
         validate_default=True
     )
-    
+
 def id_field(title: str = "ID", description: str = "ID", example: str = "123456") ->Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -33,7 +33,7 @@ def id_field(title: str = "ID", description: str = "ID", example: str = "123456"
     )
 
 def message_field(title: str = "Mensagem", description: str = "Mensagem", example: str = "Mensagem") -> Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -50,10 +50,10 @@ def name_field(title: str = "Nome", description: str = "Nome", example: str = "J
         examples=[example],
         default=None,
         validate_default=True
-    )    
+    )
 
 def password_field(title: str = "Senha", description: str = "Senha", example: str = "password1234") -> Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -63,7 +63,7 @@ def password_field(title: str = "Senha", description: str = "Senha", example: st
     )
 
 def phone_field(title: str = "Telefone", description: str = "Telefone", example: str = "(11) 99999-9999") -> Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -71,9 +71,9 @@ def phone_field(title: str = "Telefone", description: str = "Telefone", example:
         default=None,
         validate_default=True
     )
-    
+
 def updated_at_field(title: str = "Data de atualização", description: str = "Data de atualização", example: str = "2021-01-01 00:00:00") -> Field:
-    
+
     return Field(
         title=title,
         description=description,
@@ -83,7 +83,7 @@ def updated_at_field(title: str = "Data de atualização", description: str = "D
     )
 
 def value_field(title: str = "Valor", description: str = "Valor", example: float = 100.00) -> Field:
-    
+
     return Field(
         title=title,
         description=description,

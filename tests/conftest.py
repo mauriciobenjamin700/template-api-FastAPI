@@ -2,19 +2,22 @@ from pytest import fixture
 
 from app.core.constants.enums.user import UserRoles
 from app.core.security.password import hash_password
-from app.db.configs.connection import test_db
+from app.core.settings import config
+from app.db.configs.connection import AsyncDatabaseManager
 
 
 @fixture
 async def mock_db_session():
+    test_db = AsyncDatabaseManager(config.TEST_DB_URL)
+    test_db.connect()
     await test_db.create_tables()
     async with test_db as session:
-        
+
         yield session
-        
+
     await test_db.drop_tables()
-    
-        
+
+
 
 @fixture
 def mock_user_request():
@@ -24,8 +27,8 @@ def mock_user_request():
         "email": "jhon.doe@gmail.com",
         "password" : "SafePassword123@"
     }
-    
-    
+
+
 @fixture
 def mock_user_model():
     return {
