@@ -45,3 +45,6 @@ ERROR_USERNAME_INVALID_FORMAT_MIN_LENGTH = "Nome de usuário deve ter pelo menos
 ERROR_DATABASE_USER_ALREADY_EXISTS = "Usuário já existe"
 ERROR_DATABASE_USER_NOT_FOUND = "Usuário não encontrado"
 ERROR_DATABASE_USERS_NOT_FOUND = "Usuários não encontrados"
+
+MESSAGE_USER_ADD_SUCCESS = "Usuário adicionado com sucesso"
+MESSAGE_USER_DELETE_SUCCESS = "Usuário deletado com sucesso"

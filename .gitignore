@@ -4,3 +4,5 @@
 *.egg
 .venv
 venv
+
+*.ruff_cache

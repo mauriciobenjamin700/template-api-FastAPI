@@ -1,10 +1,12 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.constants.enums.user import UserRoles
-from app.core.constants.messages import ERROR_DATABASE_USER_NOT_FOUND, ERROR_DATABASE_USERS_NOT_FOUND
+from app.core.constants.messages import ERROR_DATABASE_USER_NOT_FOUND, ERROR_DATABASE_USERS_NOT_FOUND, MESSAGE_USER_DELETE_SUCCESS
 from app.core.errors import NotFoundError
+from app.core.security.password import hash_password
 from app.db.models import UserModel
 from app.db.repositories.user import UserRepository
+from app.schemas.message import Message
 from app.schemas.user import (
     UserRequest,
     UserResponse
@@ -44,6 +46,8 @@ class UserService:
         - Returns:
             - response: UserResponse : A user response object
         """
+
+        request.password = hash_password(request.password)
 
         model = self.map_request_to_model(request)
 
@@ -95,22 +99,38 @@ class UserService:
         return response
 
     async def update(self, id: str, request: UserRequest):
-        pass
 
-    async def delete_by_id(self, id: str):
+        model = await self.repository.get(id=id)
+
+        if not model:
+
+            raise NotFoundError(ERROR_DATABASE_USER_NOT_FOUND)
+
+        for key, value in request.to_dict().items():
+            if key == "password":
+                setattr(model, key, hash_password(value))
+            else:
+                setattr(model, key, value)
+
+        model = await self.repository.update(model)
+
+        response = self.map_model_to_response(model)
+
+        return response
+
+    async def delete_by_id(self, id: str) -> Message:
         """
         Delete a user from the database by id.
 
         - Args:
           - id: str : A user id.
         - Returns:
-          - response: UserResponse : A user response object with the user data.
+          - Message : A message object with the result of the operation.
         """
-        model = await self.repository.delete(id=id)
 
-        response = self.map_model_to_response(model)
+        await self.repository.delete(id=id)
 
-        return response
+        return Message(detail=MESSAGE_USER_DELETE_SUCCESS)
 
 
     @classmethod
