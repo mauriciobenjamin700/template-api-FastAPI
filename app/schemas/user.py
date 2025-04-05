@@ -1,3 +1,5 @@
+from pydantic import Field
+from app.core.constants.enums.user import UserRoles
 from app.schemas.settings.base import BaseSchema
 from app.schemas.settings.fields import(
     created_at_field,
@@ -76,6 +78,7 @@ class UserResponse(BaseSchema):
     name: str = name_field()
     phone: str = phone_field()
     email: str = email_field()
+    role: UserRoles = Field(examples=[UserRoles.USER.value])
     created_at: str = created_at_field()
     updated_at: str =  updated_at_field()
 
