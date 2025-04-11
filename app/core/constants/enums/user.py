@@ -9,11 +9,6 @@ class UserRoles(str, Enum):
         - USER: str = "user"
         - ADMIN: str = "admin"
     """
+
     USER = "user"
     ADMIN = "admin"
-
-    def __str__(self) -> str:
-        return str(self.value)
-
-    def get(self) -> str:
-        return self.value
