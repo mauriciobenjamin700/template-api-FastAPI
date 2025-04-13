@@ -3,10 +3,14 @@
 DOCKER_COMPOSE_FILE=docker-compose.yaml
 
 lint:
-	ruff check .
+	ruff check app/
+	isort --check-only app/
+	black --check app/
 
-fix:
-	ruff check --fix .
+lint-fix:
+	ruff check --fix app/
+	isort app/
+	black app/   
 
 pre-commit:
 	pre-commit autoupdate
