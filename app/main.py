@@ -15,6 +15,7 @@ app = FastAPI(
     summary="Um modelo de API com FastAPI",
     description="Um modelo de API com FastAPI para ajudar pessoas a começar a desenvolver suas APIs de forma organizada",
     version="0.0.1",
+    root_path="/api",
 )
 
 # Configurando o middleware de CORS
